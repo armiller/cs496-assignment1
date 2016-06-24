@@ -1,14 +1,25 @@
 package hello
 
 import (
-    "fmt"
     "net/http"
+    "time"
+    "html/template"
 )
+
+type Hello struct {
+	Time string
+	Ip string
+}
 
 func init() {
     http.HandleFunc("/", handler)
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
-    fmt.Fprint(w, "testing out google app engine.")
+	response := Hello{
+		time.Now().String(),
+		r.Host,
+	}
+	t, _ := template.ParseFiles("templates/hello.html")
+	t.Execute(w, response)
 }
