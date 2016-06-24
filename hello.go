@@ -18,7 +18,7 @@ func init() {
 func handler(w http.ResponseWriter, r *http.Request) {
 	response := Hello{
 		time.Now().String(),
-		r.Host,
+		r.RemoteAddr,
 	}
 	t, _ := template.ParseFiles("templates/hello.html")
 	t.Execute(w, response)
